@@ -1,62 +1,70 @@
-const taskInput = document.getElementById("taskInput");
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
-const themeToggle = document.getElementById("themeToggle");
+// A simple module for managing the portfolio.
+const portfolio = (() => {
+    // DOM Elements
+    const projectsContainer = document.querySelector('[data-js-projects]');
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const sections = document.querySelectorAll('.section');
 
-// Load theme
-if (localStorage.getItem("theme") === "light") {
-  document.documentElement.classList.add("light");
-}
+    // -- Functions --
 
-// Toggle theme
-themeToggle.addEventListener("click", () => {
-  document.documentElement.classList.toggle("light");
-  localStorage.setItem("theme",
-    document.documentElement.classList.contains("light") ? "light" : "dark"
-  );
-});
+    // Toggles mobile navigation
+    const handleNavbar = () => {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
 
-// Load saved tasks
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-renderTasks();
+        document.querySelectorAll('.nav-item').forEach(n => n.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        }));
+    };
 
-// Add task
-addTaskBtn.addEventListener("click", () => {
-  const text = taskInput.value.trim();
-  if (!text) return;
-  tasks.push({ text, done: false });
-  taskInput.value = "";
-  saveAndRender();
-});
+    // Fetches and displays project data
+    const loadProjects = async () => {
+        try {
+            const response = await fetch('data/projects.json');
+            const projects = await response.json();
+            
+            projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.classList.add('project-card');
+                projectCard.innerHTML = `
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <a href="${project.link}" target="_blank">View Project</a>
+                `;
+                projectsContainer.appendChild(projectCard);
+            });
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    };
 
-// Toggle & delete task
-taskList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("delete")) {
-    tasks.splice(e.target.dataset.index, 1);
-  } else if (e.target.classList.contains("toggle")) {
-    tasks[e.target.dataset.index].done = !tasks[e.target.dataset.index].done;
-  }
-  saveAndRender();
-});
+    // Adds scroll-based animations to sections
+    const setupScrollAnimations = () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
 
-// Save + render
-function saveAndRender() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  renderTasks();
-}
+        sections.forEach(section => observer.observe(section));
+    };
 
-function renderTasks() {
-  taskList.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.className = task.done ? "done" : "";
-    li.innerHTML = `
-      <span>${task.text}</span>
-      <div>
-        <button class="toggle" data-index="${index}">✔</button>
-        <button class="delete" data-index="${index}">🗑</button>
-      </div>
-    `;
-    taskList.appendChild(li);
-  });
-}
+    // Initializes all functions
+    const init = () => {
+        handleNavbar();
+        loadProjects();
+        setupScrollAnimations();
+    };
+
+    return { init };
+})();
+
+// Start the portfolio when the document is ready
+document.addEventListener('DOMContentLoaded', portfolio.init);
