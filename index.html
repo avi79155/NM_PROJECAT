@@ -3,83 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | K. Avinash</title>
+  <title>To-Do List App</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
-    <div class="container nav">
-      <a href="#home" class="brand">
-        <span class="brand-logo"></span>
-        <span>K. Avinash</span>
-      </a>
-      <button class="menu-btn" id="menuBtn">☰</button>
-      <nav class="nav-links" id="navLinks">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <button id="themeToggle" class="theme-toggle">🌓</button>
-      </nav>
-    </div>
+    <h1>My To-Do List ✅</h1>
+    <button id="themeToggle" class="theme-btn">🌓</button>
   </header>
 
-  <!-- Hero -->
-  <main id="home" class="container hero">
-    <div>
-      <h1 class="title">Hi, I'm <span class="grad">Avinash</span></h1>
-      <p class="subtitle">A Computer Science student specializing in Artificial Intelligence.  
-      I build intelligent, user-friendly, and visually engaging digital experiences.</p>
-      <div class="cta">
-        <a class="btn" href="#projects">View Projects</a>
-        <a class="btn ghost" href="mailto:hello@example.com">Email Me</a>
-      </div>
+  <main class="container">
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="Enter a new task...">
+      <button id="addTaskBtn" class="btn">Add Task</button>
     </div>
-    <div class="pfp"></div>
+
+    <ul id="taskList" class="task-list"></ul>
   </main>
 
-  <!-- About -->
-  <section id="about" class="container section">
-    <h2 class="section-title">About Me</h2>
-    <p class="section-sub">I'm passionate about AI, Data Science, and Web Development.  
-    Currently exploring Python, Java, DSA, and front-end technologies.</p>
-  </section>
-
-  <!-- Skills -->
-  <section id="skills" class="container section">
-    <h2 class="section-title">Skills</h2>
-    <div class="grid cols-3">
-      <div class="card"><h3>Languages</h3><p>Python, Java, JavaScript, C++</p></div>
-      <div class="card"><h3>AI & Data</h3><p>Pandas, NumPy, Matplotlib</p></div>
-      <div class="card"><h3>Web</h3><p>HTML5, CSS3, Git/GitHub</p></div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects" class="container section">
-    <h2 class="section-title">Projects</h2>
-    <div class="grid cols-2">
-      <div class="card project">
-        <h3>Stock Insight</h3>
-        <p>Web app that predicts stock trends using AI & sentiment analysis.</p>
-      </div>
-      <div class="card project">
-        <h3>Study Tracker</h3>
-        <p>Track study sessions and visualize progress with charts.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="container section">
-    <h2 class="section-title">Contact</h2>
-    <p>Email: <a href="mailto:hello@example.com">hello@example.com</a></p>
-    <p>GitHub: <a href="https://github.com/" target="_blank">github.com</a></p>
-  </section>
-
-  <footer class="footer">© 2025 Avinash</footer>
+  <footer class="footer">
+    <p>© 2025 To-Do List App</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
